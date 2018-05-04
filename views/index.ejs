@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Message Board</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+</head>
+<body>
+    <div class="container">
+        <h1>The Dojo Message Board</h1>
+        <hr>
+        <form action="/message" method="POST">
+            <p>Name: <input type="text" name="name"></p>
+            <p>Message: <textarea name="message"></textarea></p>
+            <p><input type="submit" value="Post message"></p>
+        </form>
+        <% for(var i=0; i<messages.length; i++) { %>
+            <h4>Name: <%= messages[i].name %></h4>
+            <h4>Message: <%= messages[i].message %></h4>
+            <% for(var j=0; j<messages[i].comments.length; j++) { %>
+                <p>&emsp;Name: <%= messages[i].comments[j].name %></p>
+                <p>&emsp;Comment: <%= messages[i].comments[j].comment %></p>
+            <% } %>
+            <form action="/comment" method="POST">
+                <input type="hidden" name="message_id" value="<%= messages[i]._id %>">
+                <p>&emsp;Name: <input type="text" name="name"></p>
+                <p>&emsp;Comment: <textarea name="comment"></textarea></p>
+                <p>&emsp;<input type="submit" value="Post comment"></p>
+            </form>
+        <% } %>
+    </div>
+</body>
+</html>
